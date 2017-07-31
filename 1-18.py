@@ -1,14 +1,31 @@
 from collections import namedtuple
 
-Stock = namedtuple('Stock', ['name', 'shares', 'price', 'date', 'time'])
+Subscriber = namedtuple('Subscriber', ['addr', 'joined'])
+sub = Subscriber('jonesy@example.com', '2012-10-19')
 
-# create a prototype instance
-stock_prototype = Stock('', 0, 0.0, None, None)
+def compute_cost(records):
+	total = 0.0
+	for rec in records:
+		total += rec[1] * rec[2]
+	return total
 
-# Funciton to convert a dictionary to a stock
-def dict_to_stock(s):
-	return stock_prototype._replace(**s)
+def compute_cost2(records):
+	total = 0.0
+	for rec in records:
+		s = Stock(*rec)
+		total += s.shares * s.price
+	return total
 
-a = { 'name': 'ACME', 'shares': 100, 'price': 123.45}
-a1 = dict_to_stock(a)
-print(a1)
+Stock = namedtuple('Stock', ['name', 'shares', 'price'])
+
+
+if __name__ == '__main__':
+	print(sub, sub.addr, sub.joined)
+	print('len: ', len(sub))
+	addr, joined = sub
+	print('addr: ', addr, ',joined: ',joined)
+
+	s = Stock('ACME', 100, 123.45)
+	print(s)
+	s = s._replace(shares=75)
+	print(s)
